@@ -114,7 +114,10 @@ public:
 		/* Return region */
 		HeaderAllocated* ptr = reinterpret_cast<HeaderAllocated*>(hdr);
 		ptr->block_size = sz;
-		return (reinterpret_cast<unsigned char*>(ptr) + sizeof(HeaderAllocated));
+
+		unsigned char* user_ptr = reinterpret_cast<unsigned char*>(ptr) + sizeof(HeaderAllocated);
+		memset(user_ptr, 0, sz);
+		return (user_ptr);
 	}
 
 	void free_list_free(void* mem_block)
